@@ -4,20 +4,19 @@ const generate = async (str) => {
     if(typeof(str) !== "string")
         throw new TypeError('O parametro não é uma string');
 
-    const salt = await bcrypt.genSalt(10);
-    const converted = await bcrypt.hash(str, salt);
+    const saltRounds = 10;
+    const salt = await bcrypt.genSalt(saltRounds);
+    const hash = await bcrypt.hash(str, salt);
 
-    return converted;
+    return hash;
 };
 
 const compare = async ( hash, str ) => {
     if(typeof(str) !== "string" && typeof(hash) !== "string")
         throw new TypeError('Os parametro não são do tipo string');
-    
-    const salt = await bcrypt.genSalt(10);
-    const actual = await bcrypt.hash(str, salt);
-
-    return (actual === hash ? true : false);
+        
+    const res = await bcrypt.compare(str, hash); 
+    return res;
 } 
 
 module.exports = {generate, compare};

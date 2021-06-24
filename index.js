@@ -1,13 +1,14 @@
 require('dotenv-safe').config();
 const express = require('express');
-const {users, auth} = require('./route');
+const routes = require('./route');
 
 const app = express();
 app.use(express.json());
 
 const port = 3000;
 
-app.use(users);
-app.use(auth);
+routes.map( route => {
+    app.use(route);
+});
 
 app.listen(port);
