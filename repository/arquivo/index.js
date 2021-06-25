@@ -1,10 +1,13 @@
 const fs = require('fs');
 
 const get = async (path, collection) => {
+    if(path.indexOf('.json') == -1)
+        throw new Error('illegal operation on a directory, read');
+
     return new Promise((resolve, reject) => {
         fs.readFile(path, collection, (err, data) => {
             if(err)
-                reject('erro ao abrir arquivo');
+                reject(err);
 
             const res = JSON.parse(data);
             resolve(res);
@@ -13,10 +16,13 @@ const get = async (path, collection) => {
 }
 
 const write = async (path, info) => {
+    if(path.indexOf('.json') == -1)
+        throw new Error('illegal operation on a directory, write');
+
     return new Promise((resolve, reject) => {
         fs.writeFile(path, info, (err, data)=>{
             if(err)
-                reject('erro ao abrir arquivo');
+                reject(err);
             
             resolve(data);
         });
