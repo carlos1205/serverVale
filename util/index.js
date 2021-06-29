@@ -1,3 +1,4 @@
 const Crypt = require('./crypt');
+const Validation = require('./validation');
 
-module.exports = {Crypt};
+module.exports = {Crypt, Validation};
